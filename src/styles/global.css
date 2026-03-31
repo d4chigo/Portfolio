@@ -2,23 +2,31 @@
 
 /* Custom CSS Variables for theming */
 :root {
-  --color-primary: #2563eb;
-  --color-primary-dark: #1d4ed8;
+  --color-primary: #7c3aed;
+  --color-primary-dark: #6d28d9;
   --color-bg: #ffffff;
-  --color-bg-secondary: #f8fafc;
-  --color-text: #1e293b;
-  --color-text-secondary: #64748b;
-  --color-border: #e2e8f0;
+  --color-bg-secondary: #faf5ff;
+  --color-text: #1e1b2e;
+  --color-text-secondary: #6b7280;
+  --color-border: #e9d5ff;
+  --logo-filter: invert(27%) sepia(51%) saturate(3255%) hue-rotate(252deg) brightness(95%) contrast(93%);
 }
 
 .dark {
-  --color-primary: #3b82f6;
-  --color-primary-dark: #60a5fa;
-  --color-bg: #0f172a;
-  --color-bg-secondary: #1e293b;
-  --color-text: #f1f5f9;
-  --color-text-secondary: #94a3b8;
-  --color-border: #334155;
+  --color-primary: #a78bfa;
+  --color-primary-dark: #c4b5fd;
+  --color-bg: #0f0d1a;
+  --color-bg-secondary: #1a1625;
+  --color-text: #f5f3ff;
+  --color-text-secondary: #a5a3b0;
+  --color-border: #3b3556;
+  --logo-filter: invert(69%) sepia(26%) saturate(1211%) hue-rotate(214deg) brightness(101%) contrast(97%);
+}
+
+/* Logo coloring */
+.logo-colored {
+  filter: var(--logo-filter);
+  transition: filter 0.3s ease;
 }
 
 /* Smooth transitions for theme change */

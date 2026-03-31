@@ -12,8 +12,8 @@ const { lang } = Astro.props;
   <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
-      <a href={lang === 'es' ? '/portfolio/' : `/portfolio/${lang}/`} class="text-xl font-bold text-[var(--color-primary)]">
-        D4
+      <a href={lang === 'es' ? '/portfolio/' : `/portfolio/${lang}/`} class="flex items-center">
+        <img src="/portfolio/logo.svg" alt="D4chigo Logo" class="h-10 w-auto logo-colored" />
       </a>
       
       <!-- Desktop Navigation -->
