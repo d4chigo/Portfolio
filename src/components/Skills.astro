@@ -10,6 +10,7 @@ const { lang } = Astro.props;
 
 // Skills usando Devicon - https://devicon.dev/
 // Excel usa SVG personalizado porque no está en Devicon
+// Para iconos oscuros: iconLight (con colored) para modo claro, iconDark (sin colored) para modo oscuro
 const skills = [
   { name: 'C#', icon: 'devicon-csharp-plain colored', type: 'devicon' },
   { name: 'Java', icon: 'devicon-java-plain colored', type: 'devicon' },
@@ -20,14 +21,14 @@ const skills = [
   { name: 'TypeScript', icon: 'devicon-typescript-plain colored', type: 'devicon' },
   { name: 'PHP', icon: 'devicon-php-plain colored', type: 'devicon' },
   { name: 'Docker', icon: 'devicon-docker-plain colored', type: 'devicon' },
-  { name: 'GitHub', icon: 'devicon-github-original colored', type: 'devicon' },
-  { name: 'Linux', icon: 'devicon-linux-plain colored', type: 'devicon' },
-  { name: 'Node.js', icon: 'devicon-nodejs-plain colored', type: 'devicon' },
-  { name: 'Bash', icon: 'devicon-bash-plain colored', type: 'devicon' },
-  { name: 'Unity', icon: 'devicon-unity-plain colored', type: 'devicon' },
+  { name: 'GitHub', iconLight: 'devicon-github-original colored', iconDark: 'devicon-github-original', type: 'dual' },
+  { name: 'Linux', iconLight: 'devicon-linux-plain colored', iconDark: 'devicon-linux-plain', type: 'dual' },
+  { name: 'Node.js', icon: 'devicon-nodejs-plain-wordmark colored', type: 'devicon' },
+  { name: 'Bash', iconLight: 'devicon-bash-plain colored', iconDark: 'devicon-bash-plain', type: 'dual' },
+  { name: 'Prisma', iconLight: 'devicon-prisma-original colored', iconDark: 'devicon-prisma-original', type: 'dual' },
   { name: 'MySQL', icon: 'devicon-mysql-plain colored', type: 'devicon' },
   { name: 'PostgreSQL', icon: 'devicon-postgresql-plain colored', type: 'devicon' },
-  { name: 'Astro', icon: 'devicon-astro-plain colored', type: 'devicon' },
+  { name: 'Astro', iconLight: 'devicon-astro-plain colored', iconDark: 'devicon-astro-plain', type: 'dual' },
   { 
     name: 'Excel', 
     type: 'svg',
@@ -53,9 +54,16 @@ const skills = [
           class="fade-in hover-lift bg-[var(--color-bg-secondary)] rounded-xl p-5 text-center border border-[var(--color-border)] group"
           style={`transition-delay: ${index * 50}ms`}
         >
-          {skill.type === 'svg' ? (
+          {skill.type === 'svg' && (
             <div class="w-10 h-10 mx-auto mb-3 transition-transform group-hover:scale-110" set:html={skill.svg} />
-          ) : (
+          )}
+          {skill.type === 'dual' && (
+            <div class="icon-wrapper">
+              <i class={`${skill.iconLight} text-4xl mb-3 block transition-transform group-hover:scale-110 dark:hidden`}></i>
+              <i class={`${skill.iconDark} text-4xl mb-3 hidden transition-transform group-hover:scale-110 dark:block`}></i>
+            </div>
+          )}
+          {skill.type === 'devicon' && (
             <i class={`${skill.icon} text-4xl mb-3 block transition-transform group-hover:scale-110`}></i>
           )}
           <span class="text-sm font-medium">{skill.name}</span>
@@ -112,18 +120,22 @@ const skills = [
           
           <!-- Contribution Graph -->
           <div class="w-full lg:w-auto">
-            <img 
-              src="https://ghchart.rshah.org/7c3aed/d4chigo" 
-              alt="GitHub Contributions"
-              class="w-full max-w-md mx-auto dark:hidden rounded-lg"
-              loading="lazy"
-            />
-            <img 
-              src="https://ghchart.rshah.org/a78bfa/d4chigo" 
-              alt="GitHub Contributions"
-              class="w-full max-w-md mx-auto hidden dark:block rounded-lg"
-              loading="lazy"
-            />
+            <div class="bg-white p-2 rounded-lg dark:hidden">
+              <img 
+                src="https://ghchart.rshah.org/7c3aed/d4chigo" 
+                alt="GitHub Contributions"
+                class="w-full max-w-md mx-auto"
+                loading="lazy"
+              />
+            </div>
+            <div class="bg-[#161b22] p-2 rounded-lg hidden dark:block">
+              <img 
+                src="https://ghchart.rshah.org/a78bfa/d4chigo" 
+                alt="GitHub Contributions"
+                class="w-full max-w-md mx-auto invert-chart"
+                loading="lazy"
+              />
+            </div>
             <p class="text-center text-xs text-[var(--color-text-secondary)] mt-2">
               {lang === 'es' ? 'Contribuciones en el último año' : 'Contributions in the last year'}
             </p>
@@ -133,3 +145,9 @@ const skills = [
     </div>
   </div>
 </section>
+
+<style>
+  .invert-chart {
+    filter: invert(1) hue-rotate(180deg);
+  }
+</style>
