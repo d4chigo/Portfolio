@@ -1,0 +1,97 @@
+---
+import { t, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+// Certifications data - PERSONALIZA CON TUS CERTIFICACIONES
+const certifications = [
+  {
+    id: 1,
+    title: 'Certificación Ejemplo 1',
+    issuer: 'Plataforma / Institución',
+    date: '2024',
+    // Imagen del certificado o badge
+    imageUrl: null, // Ejemplo: '/portfolio/images/certs/cert1.jpg'
+    // Link para verificar el certificado
+    verifyUrl: '#',
+  },
+  {
+    id: 2,
+    title: 'Certificación Ejemplo 2',
+    issuer: 'Otra Plataforma',
+    date: '2023',
+    imageUrl: null,
+    verifyUrl: '#',
+  },
+  // Agrega más certificaciones según las tengas
+];
+---
+
+<section id="certifications" class="py-20">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12 fade-in">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4">{t(lang, 'certifications.title')}</h2>
+      <p class="text-[var(--color-text-secondary)]">{t(lang, 'certifications.subtitle')}</p>
+      <div class="w-20 h-1 bg-[var(--color-primary)] mx-auto mt-4"></div>
+    </div>
+    
+    <!-- Grid adaptable al número de certificaciones -->
+    <div class={`grid gap-6 ${certifications.length === 1 ? 'max-w-md mx-auto' : certifications.length === 2 ? 'md:grid-cols-2 max-w-3xl mx-auto' : 'md:grid-cols-2 lg:grid-cols-3'}`}>
+      {certifications.map((cert, index) => (
+        <div 
+          class="fade-in hover-lift bg-[var(--color-bg-secondary)] rounded-2xl overflow-hidden border border-[var(--color-border)]"
+          style={`transition-delay: ${index * 100}ms`}
+        >
+          <!-- Certificate Image or Placeholder -->
+          <div class="aspect-[4/3] bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-primary)]/5 relative">
+            {cert.imageUrl ? (
+              <img 
+                src={cert.imageUrl}
+                alt={cert.title}
+                class="w-full h-full object-cover"
+              />
+            ) : (
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-[var(--color-text-secondary)]">
+                <svg class="w-16 h-16 mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                </svg>
+                <p class="text-sm">Certificado</p>
+                <p class="text-xs opacity-70">Imagen aquí</p>
+              </div>
+            )}
+          </div>
+          
+          <!-- Content -->
+          <div class="p-5">
+            <h3 class="text-lg font-semibold mb-1">{cert.title}</h3>
+            <p class="text-sm text-[var(--color-text-secondary)] mb-1">{cert.issuer}</p>
+            <p class="text-xs text-[var(--color-text-secondary)] mb-4">{cert.date}</p>
+            
+            <a 
+              href={cert.verifyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 text-sm text-[var(--color-primary)] hover:underline"
+            >
+              {t(lang, 'certifications.viewCertificate')}
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    <!-- Note when few certifications -->
+    {certifications.length <= 2 && (
+      <p class="text-center text-sm text-[var(--color-text-secondary)] mt-8 fade-in">
+        ✨ Continuamente aprendiendo y obteniendo nuevas certificaciones
+      </p>
+    )}
+  </div>
+</section>

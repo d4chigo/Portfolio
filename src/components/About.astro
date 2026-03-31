@@ -1,0 +1,81 @@
+---
+import { t, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<section id="about" class="py-20 bg-[var(--color-bg-secondary)]">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12 fade-in">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4">{t(lang, 'about.title')}</h2>
+      <div class="w-20 h-1 bg-[var(--color-primary)] mx-auto"></div>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <!-- Profile Image Placeholder -->
+      <div class="fade-in">
+        <div class="relative mx-auto w-64 h-64 sm:w-80 sm:h-80">
+          <!-- 
+            =============================================
+            📸 REEMPLAZA ESTE PLACEHOLDER CON TU FOTO
+            =============================================
+            Opciones:
+            1. Coloca tu imagen en: public/images/profile.jpg
+            2. Cambia el src a: /portfolio/images/profile.jpg
+            =============================================
+          -->
+          <div class="w-full h-full rounded-2xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-dark)] flex items-center justify-center overflow-hidden border-4 border-[var(--color-border)]">
+            <!-- Placeholder icon -->
+            <div class="text-center text-white/80 p-4">
+              <svg class="w-24 h-24 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+              </svg>
+              <p class="text-sm font-medium">Tu foto aquí</p>
+              <p class="text-xs opacity-70 mt-1">public/images/profile.jpg</p>
+            </div>
+          </div>
+          
+          <!-- Decorative elements -->
+          <div class="absolute -top-4 -right-4 w-24 h-24 bg-[var(--color-primary)]/10 rounded-full -z-10"></div>
+          <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-[var(--color-primary)]/10 rounded-full -z-10"></div>
+        </div>
+      </div>
+      
+      <!-- About Text -->
+      <div class="fade-in">
+        <p class="text-lg text-[var(--color-text-secondary)] leading-relaxed mb-6">
+          {t(lang, 'about.description')}
+        </p>
+        
+        <!-- 
+          =============================================
+          ✏️ PERSONALIZA ESTA SECCIÓN
+          =============================================
+          Agrega más párrafos o bullets con tu información:
+          - Años de experiencia
+          - Especialidades
+          - Intereses
+          =============================================
+        -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-2 h-2 bg-[var(--color-primary)] rounded-full"></div>
+            <span class="text-[var(--color-text-secondary)]">+X años de experiencia</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-2 h-2 bg-[var(--color-primary)] rounded-full"></div>
+            <span class="text-[var(--color-text-secondary)]">Especializado en React, Node.js, y más</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-2 h-2 bg-[var(--color-primary)] rounded-full"></div>
+            <span class="text-[var(--color-text-secondary)]">Apasionado por la tecnología y la innovación</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

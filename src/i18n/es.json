@@ -1,0 +1,56 @@
+{
+  "nav": {
+    "about": "Sobre Mí",
+    "skills": "Habilidades",
+    "projects": "Proyectos",
+    "certifications": "Certificaciones",
+    "experience": "Experiencia",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "greeting": "Hola, soy",
+    "role": "Desarrollador Full Stack",
+    "description": "Creo experiencias web modernas, escalables y con excelente rendimiento.",
+    "cta": "Ver Proyectos",
+    "downloadCV": "Descargar CV"
+  },
+  "about": {
+    "title": "Sobre Mí",
+    "description": "Soy un desarrollador Full Stack apasionado por crear soluciones tecnológicas que generen impacto. Me especializo en construir aplicaciones web modernas utilizando las últimas tecnologías del mercado.",
+    "photoAlt": "Foto de perfil"
+  },
+  "skills": {
+    "title": "Habilidades",
+    "subtitle": "Tecnologías con las que trabajo"
+  },
+  "projects": {
+    "title": "Proyectos",
+    "subtitle": "Algunos de mis trabajos destacados",
+    "viewProject": "Ver Proyecto",
+    "viewCode": "Ver Código"
+  },
+  "certifications": {
+    "title": "Certificaciones",
+    "subtitle": "Mis credenciales profesionales",
+    "viewCertificate": "Ver Certificado"
+  },
+  "experience": {
+    "title": "Experiencia",
+    "subtitle": "Mi trayectoria profesional",
+    "present": "Presente"
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "¿Tienes un proyecto en mente? ¡Hablemos!",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "message": "Mensaje",
+    "send": "Enviar Mensaje",
+    "namePlaceholder": "Tu nombre",
+    "emailPlaceholder": "tu@email.com",
+    "messagePlaceholder": "Cuéntame sobre tu proyecto..."
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados."
+  }
+}

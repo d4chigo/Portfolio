@@ -1,0 +1,56 @@
+{
+  "nav": {
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "certifications": "Certifications",
+    "experience": "Experience",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "role": "Full Stack Developer",
+    "description": "I create modern, scalable web experiences with excellent performance.",
+    "cta": "View Projects",
+    "downloadCV": "Download CV"
+  },
+  "about": {
+    "title": "About Me",
+    "description": "I'm a Full Stack developer passionate about creating technological solutions that make an impact. I specialize in building modern web applications using the latest technologies.",
+    "photoAlt": "Profile photo"
+  },
+  "skills": {
+    "title": "Skills",
+    "subtitle": "Technologies I work with"
+  },
+  "projects": {
+    "title": "Projects",
+    "subtitle": "Some of my featured work",
+    "viewProject": "View Project",
+    "viewCode": "View Code"
+  },
+  "certifications": {
+    "title": "Certifications",
+    "subtitle": "My professional credentials",
+    "viewCertificate": "View Certificate"
+  },
+  "experience": {
+    "title": "Experience",
+    "subtitle": "My professional journey",
+    "present": "Present"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Have a project in mind? Let's talk!",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send Message",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "you@email.com",
+    "messagePlaceholder": "Tell me about your project..."
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  }
+}

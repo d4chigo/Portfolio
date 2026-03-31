@@ -1,0 +1,128 @@
+---
+import { t, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+// Projects data - PERSONALIZA CON TUS PROYECTOS
+const projects = [
+  {
+    id: 1,
+    title: 'Proyecto 1',
+    description: 'Descripción breve del proyecto. Explica qué problema resuelve y qué tecnologías utilizaste.',
+    tags: ['React', 'Node.js', 'MongoDB'],
+    // Cuando tengas el video, reemplaza videoUrl con el link de YouTube/Vimeo
+    videoUrl: null, // Ejemplo: 'https://www.youtube.com/embed/VIDEO_ID'
+    imageUrl: null, // O usa imagen: '/portfolio/images/projects/project1.jpg'
+    liveUrl: '#',
+    codeUrl: '#',
+  },
+  {
+    id: 2,
+    title: 'Proyecto 2',
+    description: 'Otro proyecto increíble. Describe las funcionalidades principales y tu rol en el desarrollo.',
+    tags: ['Vue.js', 'Python', 'PostgreSQL'],
+    videoUrl: null,
+    imageUrl: null,
+    liveUrl: '#',
+    codeUrl: '#',
+  },
+  {
+    id: 3,
+    title: 'Proyecto 3',
+    description: 'Un tercer proyecto para mostrar la variedad de tu trabajo y habilidades.',
+    tags: ['TypeScript', 'Next.js', 'Tailwind'],
+    videoUrl: null,
+    imageUrl: null,
+    liveUrl: '#',
+    codeUrl: '#',
+  },
+];
+---
+
+<section id="projects" class="py-20 bg-[var(--color-bg-secondary)]">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12 fade-in">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4">{t(lang, 'projects.title')}</h2>
+      <p class="text-[var(--color-text-secondary)]">{t(lang, 'projects.subtitle')}</p>
+      <div class="w-20 h-1 bg-[var(--color-primary)] mx-auto mt-4"></div>
+    </div>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {projects.map((project, index) => (
+        <div 
+          class="fade-in hover-lift bg-[var(--color-bg)] rounded-2xl overflow-hidden border border-[var(--color-border)]"
+          style={`transition-delay: ${index * 100}ms`}
+        >
+          <!-- Media Container (Video or Image Placeholder) -->
+          <div class="aspect-video bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-primary)]/5 relative">
+            {project.videoUrl ? (
+              <!-- Video embed -->
+              <iframe 
+                src={project.videoUrl}
+                class="w-full h-full"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            ) : project.imageUrl ? (
+              <!-- Project image -->
+              <img 
+                src={project.imageUrl}
+                alt={project.title}
+                class="w-full h-full object-cover"
+              />
+            ) : (
+              <!-- Placeholder -->
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-[var(--color-text-secondary)]">
+                <svg class="w-16 h-16 mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                </svg>
+                <p class="text-sm">Video / Imagen</p>
+                <p class="text-xs opacity-70">del proyecto</p>
+              </div>
+            )}
+          </div>
+          
+          <!-- Content -->
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">{project.title}</h3>
+            <p class="text-[var(--color-text-secondary)] text-sm mb-4">{project.description}</p>
+            
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              {project.tags.map(tag => (
+                <span class="px-3 py-1 text-xs font-medium bg-[var(--color-primary)]/10 text-[var(--color-primary)] rounded-full">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            
+            <!-- Links -->
+            <div class="flex gap-3">
+              <a 
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex-1 py-2 text-center text-sm font-medium bg-[var(--color-primary)] text-white rounded-lg hover:bg-[var(--color-primary-dark)] transition-colors"
+              >
+                {t(lang, 'projects.viewProject')}
+              </a>
+              <a 
+                href={project.codeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex-1 py-2 text-center text-sm font-medium border border-[var(--color-border)] rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors"
+              >
+                {t(lang, 'projects.viewCode')}
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
