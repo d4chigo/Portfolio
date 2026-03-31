@@ -1,5 +1,6 @@
 ---
 import { t, type Lang } from '../i18n/utils';
+import AnimatedBackground from './AnimatedBackground.astro';
 
 interface Props {
   lang: Lang;
@@ -35,8 +36,10 @@ const skills = [
 ];
 ---
 
-<section id="skills" class="py-20">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<section id="skills" class="py-20 relative overflow-hidden">
+  <AnimatedBackground />
+  
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="text-center mb-12 fade-in">
       <h2 class="text-3xl sm:text-4xl font-bold mb-4">{t(lang, 'skills.title')}</h2>
       <p class="text-[var(--color-text-secondary)]">{t(lang, 'skills.subtitle')}</p>
