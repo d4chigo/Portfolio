@@ -59,8 +59,8 @@ const skills = [
           )}
           {skill.type === 'dual' && (
             <div class="icon-wrapper">
-              <i class={`${skill.iconLight} text-4xl mb-3 block transition-transform group-hover:scale-110 dark:hidden`}></i>
-              <i class={`${skill.iconDark} text-4xl mb-3 hidden transition-transform group-hover:scale-110 dark:block`}></i>
+              <i class={`${skill.iconLight} text-4xl mb-3 transition-transform group-hover:scale-110 icon-light`}></i>
+              <i class={`${skill.iconDark} text-4xl mb-3 transition-transform group-hover:scale-110 icon-dark`}></i>
             </div>
           )}
           {skill.type === 'devicon' && (
@@ -120,19 +120,12 @@ const skills = [
           
           <!-- Contribution Graph -->
           <div class="w-full lg:w-auto">
-            <div class="bg-white p-2 rounded-lg dark:hidden">
+            <div class="p-3 rounded-lg bg-[var(--color-bg)] border border-[var(--color-border)] chart-container">
               <img 
-                src="https://ghchart.rshah.org/7c3aed/d4chigo" 
+                id="ghchart"
+                src="https://ghchart.rshah.org/7c3aed/d4chigo"
                 alt="GitHub Contributions"
-                class="w-full max-w-md mx-auto"
-                loading="lazy"
-              />
-            </div>
-            <div class="bg-[#161b22] p-2 rounded-lg hidden dark:block">
-              <img 
-                src="https://ghchart.rshah.org/a78bfa/d4chigo" 
-                alt="GitHub Contributions"
-                class="w-full max-w-md mx-auto invert-chart"
+                class="w-full max-w-md mx-auto ghchart-img"
                 loading="lazy"
               />
             </div>
@@ -147,7 +140,23 @@ const skills = [
 </section>
 
 <style>
-  .invert-chart {
-    filter: invert(1) hue-rotate(180deg);
+  /* Iconos para modo claro/oscuro */
+  .icon-light {
+    display: block;
+  }
+  .icon-dark {
+    display: none;
+  }
+  :global(.dark) .icon-light {
+    display: none;
+  }
+  :global(.dark) .icon-dark {
+    display: block;
+  }
+  
+  /* Gráfico GitHub - reducir brillo en modo oscuro */
+  :global(.dark) .ghchart-img {
+    filter: brightness(0.85) contrast(0.9);
   }
 </style>
+
