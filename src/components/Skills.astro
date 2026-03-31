@@ -105,15 +105,15 @@ const skills = [
           <!-- Stats Grid -->
           <div class="grid grid-cols-3 gap-4 sm:gap-6">
             <div class="text-center p-4 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)]">
-              <p class="text-2xl sm:text-3xl font-bold text-[var(--color-primary)]">15+</p>
+              <p id="gh-repos" class="text-2xl sm:text-3xl font-bold text-[var(--color-primary)]">--</p>
               <p class="text-xs sm:text-sm text-[var(--color-text-secondary)]">{lang === 'es' ? 'Repositorios' : 'Repositories'}</p>
             </div>
             <div class="text-center p-4 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)]">
-              <p class="text-2xl sm:text-3xl font-bold text-[var(--color-primary)]">2+</p>
+              <p id="gh-years" class="text-2xl sm:text-3xl font-bold text-[var(--color-primary)]">--</p>
               <p class="text-xs sm:text-sm text-[var(--color-text-secondary)]">{lang === 'es' ? 'Años' : 'Years'}</p>
             </div>
             <div class="text-center p-4 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)]">
-              <p class="text-2xl sm:text-3xl font-bold text-[var(--color-primary)]">∞</p>
+              <p id="gh-commits" class="text-2xl sm:text-3xl font-bold text-[var(--color-primary)]">--</p>
               <p class="text-xs sm:text-sm text-[var(--color-text-secondary)]">{lang === 'es' ? 'Commits' : 'Commits'}</p>
             </div>
           </div>
@@ -159,4 +159,111 @@ const skills = [
     filter: brightness(0.85) contrast(0.9);
   }
 </style>
+
+<script>
+  const GITHUB_USERNAME = 'd4chigo';
+  
+  // Actualizar gráfico según tema
+  function updateChart() {
+    const isDark = document.documentElement.classList.contains('dark');
+    const img = document.getElementById('ghchart');
+    if (!img) return;
+    
+    img.src = isDark
+      ? `https://ghchart.rshah.org/a78bfa/${GITHUB_USERNAME}`
+      : `https://ghchart.rshah.org/7c3aed/${GITHUB_USERNAME}`;
+  }
+  
+  // Obtener stats de GitHub
+  async function fetchGitHubStats() {
+    try {
+      // Obtener info del usuario
+      const userRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
+      const userData = await userRes.json();
+      
+      // Repositorios públicos
+      const reposEl = document.getElementById('gh-repos');
+      if (reposEl) {
+        reposEl.textContent = userData.public_repos || '0';
+      }
+      
+      // Años en GitHub
+      const yearsEl = document.getElementById('gh-years');
+      if (yearsEl && userData.created_at) {
+        const createdDate = new Date(userData.created_at);
+        const now = new Date();
+        const years = Math.floor((now - createdDate) / (365.25 * 24 * 60 * 60 * 1000));
+        yearsEl.textContent = years > 0 ? `${years}+` : '< 1';
+      }
+      
+      // Obtener commits (sumando de todos los repos públicos)
+      const commitsEl = document.getElementById('gh-commits');
+      if (commitsEl) {
+        // Obtener repos
+        const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`);
+        const repos = await reposRes.json();
+        
+        let totalCommits = 0;
+        
+        // Contar commits del usuario en cada repo (limitado para evitar rate limit)
+        const reposToCheck = repos.slice(0, 10); // Solo primeros 10 repos
+        
+        for (const repo of reposToCheck) {
+          try {
+            const commitsRes = await fetch(
+              `https://api.github.com/repos/${GITHUB_USERNAME}/${repo.name}/commits?author=${GITHUB_USERNAME}&per_page=1`,
+              { headers: { 'Accept': 'application/vnd.github.v3+json' } }
+            );
+            
+            // GitHub devuelve el total en el header Link
+            const linkHeader = commitsRes.headers.get('Link');
+            if (linkHeader) {
+              const match = linkHeader.match(/page=(\d+)>; rel="last"/);
+              if (match) {
+                totalCommits += parseInt(match[1], 10);
+              }
+            } else {
+              // Si no hay paginación, contar los commits de la respuesta
+              const commits = await commitsRes.json();
+              if (Array.isArray(commits)) {
+                totalCommits += commits.length;
+              }
+            }
+          } catch (e) {
+            // Ignorar errores de repos individuales
+          }
+        }
+        
+        // Mostrar commits (estimado si hay muchos repos)
+        if (repos.length > 10) {
+          commitsEl.textContent = `${totalCommits}+`;
+        } else {
+          commitsEl.textContent = totalCommits > 0 ? totalCommits.toString() : '0';
+        }
+      }
+      
+    } catch (error) {
+      console.error('Error fetching GitHub stats:', error);
+      // Fallback values
+      const reposEl = document.getElementById('gh-repos');
+      const yearsEl = document.getElementById('gh-years');
+      const commitsEl = document.getElementById('gh-commits');
+      if (reposEl) reposEl.textContent = '15+';
+      if (yearsEl) yearsEl.textContent = '2+';
+      if (commitsEl) commitsEl.textContent = '500+';
+    }
+  }
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    updateChart();
+    fetchGitHubStats();
+    
+    // Observer para cambios de tema
+    const observer = new MutationObserver(updateChart);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+  });
+</script>
 
