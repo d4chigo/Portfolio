@@ -154,9 +154,9 @@ const skills = [
     display: block;
   }
   
-  /* Gráfico GitHub - reducir brillo en modo oscuro */
+  /* Gráfico GitHub - mejor contraste en modo oscuro */
   :global(.dark) .ghchart-img {
-    filter: brightness(0.85) contrast(0.9);
+    filter: brightness(1.1) saturate(1.3) hue-rotate(-10deg);
   }
 </style>
 
@@ -170,7 +170,7 @@ const skills = [
     if (!img) return;
     
     img.src = isDark
-      ? `https://ghchart.rshah.org/a78bfa/${GITHUB_USERNAME}`
+      ? `https://ghchart.rshah.org/9333ea/${GITHUB_USERNAME}`
       : `https://ghchart.rshah.org/7c3aed/${GITHUB_USERNAME}`;
   }
   
