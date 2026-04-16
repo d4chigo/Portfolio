@@ -12,21 +12,39 @@ const { lang } = Astro.props;
 const certifications = [
   {
     id: 1,
-    title: 'Certificación Ejemplo 1',
-    issuer: 'Plataforma / Institución',
-    date: '2024',
-    // Imagen del certificado o badge
-    imageUrl: null, // Ejemplo: '/portfolio/images/certs/cert1.jpg'
-    // Link para verificar el certificado
-    verifyUrl: '#',
+    title: 'Certificación Get Connected',
+    issuer: 'Cisco Networking Academy / SENATI',
+    date: '2023',
+    // Rutas correctas para los archivos en public/certificates/
+    pdfUrl: '/portfolio/certificates/get-Connected-Cisco.pdf',
   },
   {
     id: 2,
-    title: 'Certificación Ejemplo 2',
-    issuer: 'Otra Plataforma',
+    title: 'Certificación Introducción a IOT',
+    issuer: 'Cisco Networking Academy / SENATI',
     date: '2023',
-    imageUrl: null,
-    verifyUrl: '#',
+    pdfUrl: '/portfolio/certificates/IOT-Cisco.pdf',
+  },
+  {
+    id: 3,
+    title: 'Certificación Entrepreneurship',
+    issuer: 'Cisco Networking Academy / SENATI',
+    date: '2023',
+    pdfUrl: '/portfolio/certificates/Entrepreneurship-Cisco.pdf',
+  },
+  {
+    id: 4,
+    title: 'Certificación Seguridad Cibernética',
+    issuer: 'Cisco Networking Academy / SENATI',
+    date: '2023',
+    pdfUrl: '/portfolio/certificates/Seguridad-Cibernetica-Cisco.pdf',
+  },
+  {
+    id: 5,
+    title: 'Certificación Inglés Intermedio',
+    issuer: 'Only One Coin',
+    date: '2025',
+    pdfUrl: '/portfolio/certificates/Ingles-Intermedio-OnlyOneCoin.pdf',
   },
   // Agrega más certificaciones según las tengas
 ];
@@ -49,23 +67,27 @@ const certifications = [
           class="fade-in hover-lift bg-[var(--color-bg-secondary)] rounded-2xl overflow-hidden border border-[var(--color-border)]"
           style={`transition-delay: ${index * 100}ms`}
         >
-          <!-- Certificate Image or Placeholder -->
-          <div class="aspect-[4/3] bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-primary)]/5 relative">
-            {cert.imageUrl ? (
-              <img 
-                src={cert.imageUrl}
-                alt={cert.title}
-                class="w-full h-full object-cover"
-              />
-            ) : (
-              <div class="absolute inset-0 flex flex-col items-center justify-center text-[var(--color-text-secondary)]">
-                <svg class="w-16 h-16 mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+          <!-- Certificate PDF Preview -->
+          <div class="aspect-[4/3] bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-primary)]/5 relative overflow-hidden group cursor-pointer">
+            <embed 
+              src={`${cert.pdfUrl}#toolbar=0&navpanes=0`}
+              type="application/pdf"
+              class="w-full h-full"
+            />
+            <!-- Hover overlay with open button -->
+            <a 
+              href={cert.pdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-all duration-300 opacity-0 group-hover:opacity-100"
+            >
+              <div class="text-center">
+                <svg class="w-12 h-12 text-white mb-2" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-4-4l6-6m0 0l-6 6m6-6v4m-4 4v6m0 0h6m-6 0H4"></path>
                 </svg>
-                <p class="text-sm">Certificado</p>
-                <p class="text-xs opacity-70">Imagen aquí</p>
+                <p class="text-white text-sm font-medium">Abrir PDF</p>
               </div>
-            )}
+            </a>
           </div>
           
           <!-- Content -->
@@ -75,7 +97,7 @@ const certifications = [
             <p class="text-xs text-[var(--color-text-secondary)] mb-4">{cert.date}</p>
             
             <a 
-              href={cert.verifyUrl}
+              href={cert.pdfUrl}
               target="_blank"
               rel="noopener noreferrer"
               class="inline-flex items-center gap-2 text-sm text-[var(--color-primary)] hover:underline"
@@ -98,3 +120,6 @@ const certifications = [
     )}
   </div>
 </section>
+
+
+
