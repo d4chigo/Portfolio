@@ -23,8 +23,15 @@ const email = 'jhonchistama00617@gmail.com';
     <div class="max-w-2xl mx-auto">
       <form 
         id="contact-form"
+        action={`https://formsubmit.co/ajax/${email}`}
+        method="POST"
         class="fade-in space-y-6 bg-[var(--color-bg-secondary)] rounded-2xl p-8 border border-[var(--color-border)]"
       >
+        <!-- FormSubmit Configuration -->
+        <input type="hidden" name="_subject" value="Nuevo mensaje de contacto - Portfolio">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        
         <!-- Name field -->
         <div>
           <label for="name" class="block text-sm font-medium mb-2">
@@ -132,17 +139,93 @@ const email = 'jhonchistama00617@gmail.com';
 
 <script define:vars={{ email }}>
   const form = document.getElementById('contact-form');
+  const submitBtn = form?.querySelector('button[type="submit"]');
   
-  form?.addEventListener('submit', (e) => {
+  form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     
     const name = document.getElementById('contact-name').value;
     const userEmail = document.getElementById('contact-email').value;
     const message = document.getElementById('contact-message').value;
     
-    const subject = encodeURIComponent(`Contacto desde Portfolio - ${name}`);
-    const body = encodeURIComponent(`Nombre: ${name}\nEmail: ${userEmail}\n\nMensaje:\n${message}`);
+    if (!name || !userEmail || !message) {
+      alert('Por favor completa todos los campos');
+      return;
+    }
     
-    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+    // Show loading state
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `
+        <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        ${lang === 'es' ? 'Enviando...' : 'Sending...'}
+      `;
+    }
+    
+    try {
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+      
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      });
+      
+      const result = await response.json();
+      
+      if (result.success === "true" || response.ok) {
+        // Reset form
+        form.reset();
+        
+        // Show success message
+        if (submitBtn) {
+          submitBtn.innerHTML = `
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
+            </svg>
+            ${lang === 'es' ? '¡Mensaje enviado!' : 'Message sent!'}
+          `;
+          submitBtn.classList.add('bg-green-600');
+          submitBtn.classList.remove('bg-[var(--color-primary)]');
+        }
+        
+        // Reset button after 3 seconds
+        setTimeout(() => {
+          if (submitBtn) {
+            submitBtn.innerHTML = `
+               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+              </svg>
+              ${lang === 'es' ? 'Enviar Mensaje' : 'Send Message'}
+            `;
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('bg-green-600');
+            submitBtn.classList.add('bg-[var(--color-primary)]');
+          }
+        }, 3000);
+      } else {
+        throw new Error(result.message || 'Error en el servidor');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert(lang === 'es' ? 'Error al enviar: ' + error.message : 'Error sending: ' + error.message);
+      
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+          ${lang === 'es' ? 'Enviar Mensaje' : 'Send Message'}
+        `;
+      }
+    }
   });
 </script>
