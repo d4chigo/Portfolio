@@ -12,8 +12,8 @@ const { lang } = Astro.props;
   <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
-      <a href={lang === 'es' ? '/portfolio/' : `/portfolio/${lang}/`} class="flex items-center">
-        <img src="/portfolio/logo.svg" alt="D4chigo Logo" class="h-10 w-auto logo-colored" />
+      <a href={lang === 'es' ? '/' : `/${lang}/`} class="flex items-center">
+        <img src="/logo.svg" alt="D4chigo Logo" class="h-10 w-auto logo-colored" />
       </a>
       
       <!-- Desktop Navigation -->
@@ -128,7 +128,7 @@ const { lang } = Astro.props;
     // Build new URL
     const newPath = newLang === 'es' 
       ? `/portfolio${basePath}` 
-      : `/portfolio/${newLang}${basePath}`;
+      : `/${newLang}${basePath}`;
     
     window.location.href = newPath;
   });
