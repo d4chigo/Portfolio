@@ -68,12 +68,16 @@ const certifications = [
           style={`transition-delay: ${index * 100}ms`}
         >
           <!-- Certificate PDF Preview -->
-          <div class="aspect-[4/3] bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-primary)]/5 relative overflow-hidden group cursor-pointer">
-            <embed 
-              src={`${cert.pdfUrl}#toolbar=0&navpanes=0`}
-              type="application/pdf"
-              class="w-full h-full"
-            />
+          <div class="aspect-[4/3] bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-primary)]/5 relative overflow-hidden group cursor-pointer flex items-center justify-center">
+            <!-- PDF Icon/Thumbnail -->
+            <div class="text-center group-hover:scale-110 transition-transform duration-300">
+              <svg class="w-16 h-16 text-[var(--color-primary)] mx-auto mb-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M7,12H17V13H7V12M7,14H17V15H7V14M7,16H17V17H7V16Z" />
+              </svg>
+              <p class="text-sm font-medium text-[var(--color-text-secondary)]">PDF</p>
+              <p class="text-xs text-[var(--color-text-secondary)] opacity-70">Haz clic para ver</p>
+            </div>
+            
             <!-- Hover overlay with open button -->
             <a 
               href={cert.pdfUrl}
@@ -83,7 +87,7 @@ const certifications = [
             >
               <div class="text-center">
                 <svg class="w-12 h-12 text-white mb-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-4-4l6-6m0 0l-6 6m6-6v4m-4 4v6m0 0h6m-6 0H4"></path>
+                  <path d="M8 5v14l11-7z"/>
                 </svg>
                 <p class="text-white text-sm font-medium">Abrir PDF</p>
               </div>
