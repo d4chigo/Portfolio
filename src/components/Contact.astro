@@ -173,11 +173,14 @@ const email = 'jhonchistama00617@gmail.com';
       
       const data = await response.json();
       
-      if (response.ok) {
+      if (data.success) {
         // Reset form
         form.reset();
         
-        // Show success message
+        // Show success alert
+        alert(lang === 'es' ? '¡Mensaje enviado correctamente! Te responderé pronto.' : 'Message sent successfully! I will reply soon.');
+        
+        // Show success message on button
         if (submitBtn) {
           submitBtn.innerHTML = `
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
