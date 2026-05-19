@@ -65,3 +65,8 @@ body {
 .dark .hover-lift:hover {
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
 }
+
+/* Hide language selector and English route */
+#lang-selector {
+  display: none;
+}
