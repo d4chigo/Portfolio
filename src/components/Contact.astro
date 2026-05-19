@@ -23,14 +23,12 @@ const email = 'jhonchistama00617@gmail.com';
     <div class="max-w-2xl mx-auto">
       <form 
         id="contact-form"
-        action={`https://formsubmit.co/ajax/${email}`}
+        action="https://api.web3forms.com/submit"
         method="POST"
         class="fade-in space-y-6 bg-[var(--color-bg-secondary)] rounded-2xl p-8 border border-[var(--color-border)]"
       >
-        <!-- FormSubmit Configuration -->
-        <input type="hidden" name="_subject" value="Nuevo mensaje de contacto - Portfolio">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="false">
+        <!-- Web3Forms Configuration -->
+        <input type="hidden" name="access_key" value="498f9132-9d80-4727-b6d7-e664a036a2ac">
         
         <!-- Name field -->
         <div>
@@ -137,7 +135,7 @@ const email = 'jhonchistama00617@gmail.com';
   </div>
 </section>
 
-<script define:vars={{ email }}>
+<script define:vars={{ lang }}>
   const form = document.getElementById('contact-form');
   const submitBtn = form?.querySelector('button[type="submit"]');
   
@@ -149,7 +147,7 @@ const email = 'jhonchistama00617@gmail.com';
     const message = document.getElementById('contact-message').value;
     
     if (!name || !userEmail || !message) {
-      alert('Por favor completa todos los campos');
+      alert(lang === 'es' ? 'Por favor completa todos los campos' : 'Please fill in all fields');
       return;
     }
     
@@ -167,20 +165,15 @@ const email = 'jhonchistama00617@gmail.com';
     
     try {
       const formData = new FormData(form);
-      const data = Object.fromEntries(formData);
       
       const response = await fetch(form.action, {
         method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
+        body: formData
       });
       
-      const result = await response.json();
+      const data = await response.json();
       
-      if (result.success === "true" || response.ok) {
+      if (response.ok) {
         // Reset form
         form.reset();
         
@@ -211,7 +204,7 @@ const email = 'jhonchistama00617@gmail.com';
           }
         }, 3000);
       } else {
-        throw new Error(result.message || 'Error en el servidor');
+        throw new Error(data.message || (lang === 'es' ? 'Error en el servidor' : 'Server error'));
       }
     } catch (error) {
       console.error('Error:', error);
