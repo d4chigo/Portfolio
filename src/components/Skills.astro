@@ -166,7 +166,7 @@ const skills = [
   // Actualizar gráfico según tema
   function updateChart() {
     const isDark = document.documentElement.classList.contains('dark');
-    const img = document.getElementById('ghchart');
+    const img = document.getElementById('ghchart') as HTMLImageElement;
     if (!img) return;
     
     img.src = isDark
@@ -192,7 +192,7 @@ const skills = [
       if (yearsEl && userData.created_at) {
         const createdDate = new Date(userData.created_at);
         const now = new Date();
-        const years = Math.floor((now - createdDate) / (365.25 * 24 * 60 * 60 * 1000));
+        const years = Math.floor((now.getTime() - createdDate.getTime()) / (365.25 * 24 * 60 * 60 * 1000));
         yearsEl.textContent = years > 0 ? `${years}+` : '< 1';
       }
       
